@@ -1,5 +1,25 @@
 love.graphics.setDefaultFilter("nearest", "nearest")
 love.graphics.setFont(love.graphics.newFont("assets/m5x7.ttf", 16))
+love.graphics.setShader(love.graphics.newShader([[
+	vec2 WINDOW_SIZE = vec2(503, 650);
+	int radius = 2;
+	float quality = 2.5;
+	
+	vec4 effect (vec4 color, Image texture, vec2 textureCoordinate, vec2 screenCoordinate) {
+		vec4 originalColor = Texel(texture, textureCoordinate);
+		vec2 movementVector = quality / WINDOW_SIZE;
+		vec4 colorSum = vec4(0, 0, 0, 0);
+		
+		for (int x = -radius; x <= radius; x++) {
+			for (int y = -radius; y <= radius; y++) {
+				vec2 offset = vec2(x, y) * movementVector;
+				colorSum += Texel(texture, textureCoordinate + offset);
+			}
+		}
+		
+		return ((colorSum / (pow((radius * 2) + 1, 2))) + originalColor) * color;
+	}
+]]))
 
 console = require("./libraries/console")
 consoleLayer = console.layer(50, 50, -3, 16)
@@ -28,7 +48,7 @@ end
 
 function generateStreamerText (length)
 	output = {}
-	possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+	possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890$%.!<>[]{}+-*/\\"
 	for i = 1, length do
 		letterPosition = math.floor(love.math.random(string.len(possibleCharacters)))
 		table.insert(output, console.character(string.sub(possibleCharacters, letterPosition, letterPosition), {0, 0, 0, 0}, love.math.random() < 0.5, love.math.random() < 0.5))
