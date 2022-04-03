@@ -1,6 +1,51 @@
 function love.conf (properties)
-    properties.console = true
+	properties.identity = nil
+	properties.appendidentity = false
+	properties.version = "11.4"
+	properties.console = false
+	properties.accelerometerjoystick = false
+	properties.externalstorage = false
+	properties.gammacorrect = false
+
+	properties.audio.mic = false
+	properties.audio.mixwithsystem = false
+
 	properties.window.title = "Matrix"
-    properties.window.width = 503
-    properties.window.height = 650
+	properties.window.icon = nil
+	properties.window.width = 503
+	properties.window.height = 650
+	properties.window.borderless = false
+	properties.window.resizable = false
+	properties.window.minwidth = 1
+	properties.window.minheight = 1
+	properties.window.fullscreen = false
+	properties.window.fullscreentype = "desktop"
+	properties.window.vsync = 1
+	properties.window.msaa = 0
+	properties.window.depth = nil
+	properties.window.stencil = nil
+	properties.window.display = 1
+	properties.window.highdpi = false
+	properties.window.usedpiscale = true
+	properties.window.x = nil
+	properties.window.y = nil
+
+	properties.modules.audio = false
+	properties.modules.data = false
+	properties.modules.event = true
+	properties.modules.font = true
+	properties.modules.graphics = true
+	properties.modules.image = false
+	properties.modules.joystick = false
+	properties.modules.keyboard = false
+	properties.modules.math = true
+	properties.modules.mouse = false
+	properties.modules.physics = false
+	properties.modules.sound = false
+	properties.modules.system = false
+	properties.modules.thread = false
+	properties.modules.timer = true
+	properties.modules.touch = false
+	properties.modules.video = false
+	properties.modules.window = true
 end
