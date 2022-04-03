@@ -12,8 +12,8 @@ function love.conf (properties)
 
 	properties.window.title = "Matrix"
 	properties.window.icon = nil
-	properties.window.width = 503
-	properties.window.height = 650
+	properties.window.width = 653
+	properties.window.height = 800
 	properties.window.borderless = false
 	properties.window.resizable = false
 	properties.window.minwidth = 1
