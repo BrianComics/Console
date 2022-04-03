@@ -1,7 +1,21 @@
+CONSOLE_COLUMNS = 50
+CONSOLE_ROWS = 50
+CONSOLE_FONT_SIZE = 16
+
+STREAMER_COUNT = 300
+STREAMER_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890\"'`$%&@#.!<>[]{}+-*/\\"
+STREAMER_SPEED_MIN = 3
+STREAMER_SPEED_MAX = 10
+STREAMER_SPEED_DIV = 10
+STREAMER_TEXT_MIN = 10
+STREAMER_TEXT_MAX = 30
+STREAMER_TEXT_FLIPX_CHANCE = 0.5
+STREAMER_TEXT_FLIPY_CHANCE = 0.5
+
 love.graphics.setDefaultFilter("nearest", "nearest")
-love.graphics.setFont(love.graphics.newFont("assets/m5x7.ttf", 16))
+love.graphics.setFont(love.graphics.newFont("assets/m5x7.ttf", CONSOLE_FONT_SIZE))
 love.graphics.setShader(love.graphics.newShader([[
-	vec2 WINDOW_SIZE = vec2(503, 650);
+	vec2 WINDOW_SIZE = vec2(653, 800);
 	int radius = 2;
 	float quality = 2.5;
 	
@@ -22,13 +36,9 @@ love.graphics.setShader(love.graphics.newShader([[
 ]]))
 
 console = require("./libraries/console")
-consoleLayer = console.layer(50, 50, -3, 16)
-
-COLUMNS = 50
-ROWS = 50
+consoleLayer = console.layer(CONSOLE_COLUMNS, CONSOLE_ROWS, 0, CONSOLE_FONT_SIZE)
 
 streamers = {}
-streamerCount = 300
 
 function createStreamer ()
 	local streamer = {}
@@ -40,23 +50,22 @@ function createStreamer ()
 end
 
 function prepareStreamer (streamer)
-	streamer.column = love.math.random(COLUMNS)
-	streamer.position = -love.math.random(ROWS)
-	streamer.speed = love.math.random(3, 10) / 10
-	streamer.text = generateStreamerText(love.math.random(10, 30))
+	streamer.column = love.math.random(CONSOLE_COLUMNS)
+	streamer.position = -love.math.random(CONSOLE_ROWS)
+	streamer.speed = love.math.random(STREAMER_SPEED_MIN, STREAMER_SPEED_MAX) / STREAMER_SPEED_DIV
+	streamer.text = generateStreamerText(love.math.random(STREAMER_TEXT_MIN, STREAMER_TEXT_MAX))
 end
 
 function generateStreamerText (length)
 	output = {}
-	possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890$%.!<>[]{}+-*/\\"
 	for i = 1, length do
-		letterPosition = math.floor(love.math.random(string.len(possibleCharacters)))
-		table.insert(output, console.character(string.sub(possibleCharacters, letterPosition, letterPosition), {0, 0, 0, 0}, love.math.random() < 0.5, love.math.random() < 0.5))
+		letterPosition = math.floor(love.math.random(string.len(STREAMER_CHARACTERS)))
+		table.insert(output, console.character(string.sub(STREAMER_CHARACTERS, letterPosition, letterPosition), {0, 0, 0, 0}, love.math.random() < STREAMER_TEXT_FLIPX_CHANCE, love.math.random() < STREAMER_TEXT_FLIPY_CHANCE))
 	end
 	return output
 end
 
-for i = 1, streamerCount do
+for i = 1, STREAMER_COUNT do
 	streamer = createStreamer()
 	prepareStreamer(streamer)
 	table.insert(streamers, streamer)
@@ -66,7 +75,7 @@ function love.update (deltaTime)
 	consoleLayer:clear()
 	for _, streamer in pairs(streamers) do
 		for i = 1, #streamer.text do
-			if streamer.position - #streamer.text > ROWS then
+			if streamer.position - #streamer.text > CONSOLE_ROWS then
 				prepareStreamer(streamer)
 			end
 
