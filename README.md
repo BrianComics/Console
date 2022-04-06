@@ -1,5 +1,5 @@
 # Console
-This is Console, a simplistic library for the Love2D game framework for creating “console layers”. These console layers are similar to the existing canvases, but instead of pixels, you use text to create use text instead of pixels, allowing you to easily create ASCII games or add monospaced text overlays. In the demo above, I recreated the Matrix Rain effect from the Matrix movies. You can have a quick look through it to get the basic idea of the library.
+This is Console, a simplistic library for the Love2D game framework for creating “console layers”. These console layers are similar to the existing canvases, but instead of pixels, you use text, allowing you to easily create ASCII games or add monospaced text overlays. In the demo above, I recreated the Matrix Rain effect from the Matrix movies. You can have a quick look through it to get the basic idea of the library.
 
 In case my messy demo code doesn't help you understand, though, here is a short tutorial on the library. We will start with this base Love2D project. The first two lines simply turns off antialiasing and sets the default font to a cool font I found called `m5x7`. You can find the font in the demo files above.
 ```lua
